@@ -1,24 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import Navbar from "../src/components/Navbar.jsx";
+import Menu from "../src/components/Menu.jsx";
 
 function App() {
+  const [darkmode, setdarkmode] = useState(true);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="flex flex-row">
+      <Menu darkmode={darkmode} setdarkmode={setdarkmode} />
+      <section className={`flex-col basis-10/12  `}>
+        <Navbar darkmode={darkmode} />
+        <section>Video cart</section>
+      </section>
+    </main>
   );
 }
 
