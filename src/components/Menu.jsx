@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../img/logo.png";
 import HomeIcon from "@mui/icons-material/Home";
 import ExploreIcon from "@mui/icons-material/Explore";
@@ -16,43 +16,56 @@ import FlagIcon from "@mui/icons-material/Flag";
 import HelpIcon from "@mui/icons-material/Help";
 import SettingsBrightnessIcon from "@mui/icons-material/SettingsBrightness";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-const Menu = ({ darkmode, setdarkmode }) => {
+import { ModeContext } from "../context/index.jsx";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+const Menu = () => {
+  const { darkmode, setdarkmode } = useContext(ModeContext);
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <div
       className={`basis-2/12 ${
         darkmode
-          ? " bg-zinc-900 text-neutral-50"
-          : " text-zinc-900 bg-neutral-50"
-      } h-full`}
+          ? " bg-zinc-800 text-neutral-50"
+          : " text-zinc-900 bg-neutral-100"
+      } h-full `}
     >
-      <section className="p-2">
-        <div className=" flex flex-row justify-center items-center">
-          <img src={logo} className="h-7 mr-2" alt="logo" />
-          <h3>YouTube</h3>
-        </div>
+      <section className="p-2 cursor-pointer">
+        <Link to="/">
+          <div className=" flex flex-row justify-center items-center">
+            <img src={logo} className="h-7 mr-2" alt="logo" />
+            <h3>YouTube</h3>
+          </div>
+        </Link>
         <section>
           <ul className="cursor-pointer ml-5 mt-6">
-            <li
-              className={`flex flex-row mb-3 pt-1 pb-1 ${
-                darkmode ? "hover:bg-neutral-600" : "hover:bg-neutral-300"
-              }`}
-            >
-              <HomeIcon /> <h3 className="ml-8">Home</h3>
-            </li>
-            <li
-              className={`flex flex-row mb-3 pt-1 pb-1 ${
-                darkmode ? "hover:bg-neutral-600" : "hover:bg-neutral-300"
-              }`}
-            >
-              <ExploreIcon /> <h3 className="ml-8">Explore</h3>
-            </li>
-            <li
-              className={`flex flex-row mb-3 pt-1 pb-1 ${
-                darkmode ? "hover:bg-neutral-600" : "hover:bg-neutral-300"
-              }`}
-            >
-              <SubscriptionsIcon /> <h3 className="ml-8">Subscription</h3>
-            </li>
+            <Link to="/">
+              <li
+                className={`flex flex-row mb-3 pt-1 pb-1 ${
+                  darkmode ? "hover:bg-neutral-600" : "hover:bg-neutral-300"
+                }`}
+              >
+                <HomeIcon /> <h3 className="ml-8">Home</h3>
+              </li>
+            </Link>
+            <Link to="trends">
+              <li
+                className={`flex flex-row mb-3 pt-1 pb-1 ${
+                  darkmode ? "hover:bg-neutral-600" : "hover:bg-neutral-300"
+                }`}
+              >
+                <ExploreIcon /> <h3 className="ml-8">Explore</h3>
+              </li>
+            </Link>
+            <Link to="subscriptions">
+              <li
+                className={`flex flex-row mb-3 pt-1 pb-1 ${
+                  darkmode ? "hover:bg-neutral-600" : "hover:bg-neutral-300"
+                }`}
+              >
+                <SubscriptionsIcon /> <h3 className="ml-8">Subscription</h3>
+              </li>
+            </Link>
             <hr className="mt-4 mb-4 pl-3 pr-3 " />
             <li
               className={`flex flex-row mb-3 pt-1 pb-1 ${
@@ -68,16 +81,24 @@ const Menu = ({ darkmode, setdarkmode }) => {
             >
               <HistoryIcon /> <h3 className="ml-8">History</h3>
             </li>
-            <hr className="mt-4 mb-4 pl-3 pr-3 justify-center items-center" />
-            <li className="flex flex-col">
-              <p className="w-41">
-                Sign in to like videos, comment and subscribe
-              </p>
-              <button className="border-solid border-2 border-sky-500 justify-center items-center flex w-30 p-2 rounded mt-2">
-                <AccountCircleIcon className="mr-2" />
-                SIGN IN
-              </button>
-            </li>
+
+            {!currentUser && (
+              <>
+                <hr className="mt-4 mb-4 pl-3 pr-3 justify-center items-center" />
+                <li className="flex flex-col">
+                  <p className="w-41">
+                    Sign in to like videos, comment and subscribe
+                  </p>
+                  <Link to="signin">
+                    <button className="border-solid border-2 border-sky-500 justify-center items-center flex w-full p-2 rounded mt-2">
+                      <AccountCircleIcon className="mr-2" />
+                      SIGN IN
+                    </button>
+                  </Link>
+                </li>
+              </>
+            )}
+
             <hr className="mt-4 mb-4 pl-3 pr-3" />
             <li className="mb-3 pt-1 pb-1">Best of YouTube</li>
             <li
